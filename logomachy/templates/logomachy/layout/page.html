@@ -2,7 +2,15 @@
 {% block body_content %}
     {% include 'logomachy/layout/header.html' %}
 
-    {% block page_content %}{% endblock page_content%}
+    <!--[if lte IE 9]>
+    <div class="alert alert-warning text-center" role="alert">
+        You are using an <strong>outdated</strong> browser.
+        Please <a href="https://browsehappy.com/">upgrade your browser</a>
+        to improve your experience and security.
+    </div>
+    <![endif]-->
+
+    {% block page_content %}{% endblock page_content %}
 
     {% include 'logomachy/layout/footer.html' %}
 {% endblock body_content %}

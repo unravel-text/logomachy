@@ -12,3 +12,9 @@ Set up process:
     django-admin startproject logomachy_project
     mv ./logomachy_project/* ./
     python manage.py startapp logomachy
+    
+    pip setuptools mypy
+    django docutils psycopg2
+    celery django-celery-results django-celery-beat
+    django-debug-toolbar django-extensions
+    

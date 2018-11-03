@@ -13,20 +13,240 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# This is directory containing the project and app directories.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '::1', '[::1]', '0.0.0.0']
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@l=s2=(soa)g3@zu0e=xt%$8fcxa=!my2b@_ieg$k_d04r(2&!'
+ROOT_URLCONF = 'logomachy_project.urls'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# --- Cache ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#cache
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
+KEY_PREFIX = 'logomachy'
+
+# --- Database ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#database
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}
+
+# --- Debugging ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#debugging
+
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# --- Email ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#email
 
-# Application definition
+ADMINS = []
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'tmp', 'email')
+if not os.path.isdir(EMAIL_FILE_PATH):
+    os.makedirs(EMAIL_FILE_PATH, exist_ok=True)
+
+EMAIL_SUBJECT_PREFIX = '[Logomachy] '
+MANAGERS = []
+SERVER_EMAIL = 'root@localhost'
+
+# --- File Uploads ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#file-uploads
+
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+FILE_UPLOAD_PERMISSIONS = 0o644
+
+FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'tmp', 'uploads')
+if not os.path.isdir(FILE_UPLOAD_TEMP_DIR):
+    os.makedirs(FILE_UPLOAD_TEMP_DIR, exist_ok=True)
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'tmp', 'media')
+if not os.path.isdir(MEDIA_ROOT):
+    os.makedirs(MEDIA_ROOT, exist_ok=True)
+
+MEDIA_URL = 'media/'
+
+# --- Globalization (i18n/l10n) ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#globalization-i18n-l10n
+
+LANGUAGE_CODE = 'en-au'
+LANGUAGE_COOKIE_NAME = 'logomachy_language'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+# --- HTTP ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#http
+
+INTERNAL_IPS = []
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+csrf_index = MIDDLEWARE.index('django.middleware.csrf.CsrfViewMiddleware')
+MIDDLEWARE.insert(csrf_index + 1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+
+WSGI_APPLICATION = 'logomachy_project.wsgi.application'
+
+SECURE_BROWSER_XSS_FILTER = False
+SECURE_CONTENT_TYPE_NOSNIFF = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
+SECURE_HSTS_SECONDS = 0
+SECURE_PROXY_SSL_HEADER = None
+SECURE_REDIRECT_EXEMPT = []
+SECURE_SSL_HOST = None
+SECURE_SSL_REDIRECT = False
+
+# --- Logging ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#id11
+
+LOGGING_DIR = os.path.join(BASE_DIR, 'tmp', 'logs')
+if not os.path.isdir(LOGGING_DIR):
+    os.makedirs(LOGGING_DIR, exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[%(asctime)s] [%(levelname)8s] [%(name)20s] - %(status_code)s: %(message)s',
+        },
+        'django.request': {
+            'format': '[%(asctime)s] [%(levelname)8s] [%(name)20s] - %(status_code)s: %(message)s'
+        },
+        'standard': {
+            'format': '[%(asctime)s] [%(levelname)8s] [%(name)20s] - %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+        'console.server': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'django.server',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'app_log': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'app.log'),
+            'formatter': 'standard',
+        },
+        'django': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'django.log'),
+            'formatter': 'standard',
+        },
+        'django.request': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'django_request.log'),
+            'formatter': 'django.request',
+        },
+        'django.server': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'django_server.log'),
+            'formatter': 'django.server',
+        },
+        'django.template': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'django_template.log'),
+            'formatter': 'standard',
+        },
+        'django.security': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'django_security.log'),
+            'formatter': 'standard',
+        },
+        'django.db': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'django_db.log'),
+            'formatter': 'standard',
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'mail_admins', 'app_log'],
+            'level': 'INFO',
+        },
+        'django': {
+            'handlers': ['console', 'mail_admins', 'django'],
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['django.request', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['django.server', 'console.server'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.template': {
+            'handlers': ['django.template', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.security': {
+            'handlers': ['django.security', 'console', 'mail_admins'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'django.db': {
+            'handlers': ['django.db', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        }
+    }
+}
+
+# --- Models ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#models
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -36,22 +256,35 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'logomachy',
     'django_celery_results',
     'django_celery_beat',
+    'debug_toolbar',
+    'django_extensions'
 ]
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+# --- Security ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#models
 
-ROOT_URLCONF = 'logomachy_project.urls'
+# For use in development only
+SECRET_KEY = '@l=s2=(soa)g3@zu0e=xt%$8fcxa=!my2b@_ieg$k_d04r(2&!'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+CSRF_COOKIE_DOMAIN = None
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_NAME = 'logomachy_django_csrftoken'
+CSRF_COOKIE_PATH = '/'
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SECURE = False
+CSRF_USE_SESSIONS = False
+CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
+CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
+CSRF_TRUSTED_ORIGINS = []
+
+# --- Templates ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#id12
 
 TEMPLATES = [
     {
@@ -69,20 +302,20 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'logomachy_project.wsgi.application'
+# --- Auth ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#auth
 
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-# Password validation
-# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
+AUTH_USER_MODEL = 'auth.User'
+LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGIN_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = None
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -99,26 +332,51 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/2.1/topics/i18n/
+# --- Messages ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#messages
 
-LANGUAGE_CODE = 'en-au'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
-TIME_ZONE = 'UTC'
+# --- Sessions ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#sessions
 
-USE_I18N = True
+SESSION_CACHE_ALIAS = 'default'
+SESSION_COOKIE_AGE = 1209600
+SESSION_COOKIE_DOMAIN = None
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_NAME = 'logomachy_sessionid'
+SESSION_COOKIE_PATH = '/'
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = False
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_FILE_PATH = None
+SESSION_SAVE_EVERY_REQUEST = False
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
-USE_L10N = True
+# --- Static Files ---
+# https://docs.djangoproject.com/en/2.1/ref/settings/#static-files
 
-USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, 'logomachy', 'static')
+if not os.path.isdir(STATIC_ROOT):
+    os.makedirs(STATIC_ROOT, exist_ok=True)
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = []
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
 
-# Celery
+# --- Celery ---
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html
 
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+# --- Logomachy ---
+
+LOGOMACHY_SOURCE_CODE_URL = 'https://github.com/unravel-text/logomachy'
+LOGOMACHY_WIKI_URL = 'https://github.com/unravel-text/unravel/wiki'
+SITE_ID = 1

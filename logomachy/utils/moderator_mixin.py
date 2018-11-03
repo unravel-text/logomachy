@@ -21,4 +21,5 @@ class ModeratorMixin:
         help_text='The user that moderated this record.')
 
     class Meta:
+        abstract = True
         default_manager_name = ModeratedManager

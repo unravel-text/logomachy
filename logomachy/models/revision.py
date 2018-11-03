@@ -33,7 +33,7 @@ class Revision(app_models.Common, app_utils.ModeratorMixin):
         help_text='The language of this revision of the document.')
     country = models.CharField(
         max_length=10, null=False, blank=False,
-        help_text='The country locale of this revision of the document.')
+        help_text='The locale of this revision of the document.')
 
     source_url = models.URLField(
         max_length=2000, null=True, blank=True,

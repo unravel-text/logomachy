@@ -1,4 +1,5 @@
 from .index_view import IndexView
+from .profile_view import ProfileView
 from .login_view import LoginView
 from .logout_view import LogoutView
 from .password_change_done_view import PasswordChangeDoneView

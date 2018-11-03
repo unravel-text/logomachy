@@ -34,7 +34,7 @@ class Document(app_models.Common, app_utils.ModeratorMixin):
         max_length=50, null=False, blank=False, choices=CATEGORIES, help_text='The category of this document.')
 
     tags = models.ManyToManyField(
-        app_models.Tag, related_name='documents',
+        app_models.Tag, blank=True, related_name='documents',
         help_text='The tags applied to this revision of a document, '
                   'for example indicating a geographic or social region, author or creator, or application scope.')
 

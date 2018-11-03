@@ -1,0 +1,31 @@
+.navbar-logomachy {
+    background-color: #23621F;
+}
+
+body {
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+/* Palette URL: http://paletton.com/#uid=32O0X0kllllkn-AkRrrlPffmj99 */
+
+/* As hex codes */
+
+.colour-a-0 { color: #328A2E }	/* Main Primary color */
+.colour-a-1 { color: #54D54E }
+.colour-a-2 { color: #43B13E }
+.colour-a-3 { color: #23621F }
+.colour-a-4 { color: #143B12 }
+.colour-b-0 { color: #AA8439 }	/* Main Secondary color (1) */
+.colour-b-1 { color: #FFC85D }
+.colour-b-2 { color: #DBAA4C }
+.colour-b-3 { color: #795D27 }
+.colour-b-4 { color: #493816 }
+.colour-c-0 { color: #572A72 }	/* Main Secondary color (2) */
+.colour-c-1 { color: #8E49B7 }
+.colour-c-2 { color: #713892 }
+.colour-c-3 { color: #3E1D51 }
+.colour-c-4 { color: #251131 }

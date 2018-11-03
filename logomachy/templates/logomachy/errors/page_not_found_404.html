@@ -1,0 +1,8 @@
+{% extends 'logomachy/layout/page.html' %}
+{% block page_content %}
+    <div class="container">
+        <h1>Not Found 404</h1>
+        <p>{{ request_path }}</p>
+        <p>{{ exception }}</p>
+    </div>
+{% endblock page_content %}
