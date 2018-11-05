@@ -258,11 +258,12 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'django.contrib.sites',
     'django.contrib.sitemaps',
-    'logomachy',
     'django_celery_results',
     'django_celery_beat',
     'debug_toolbar',
-    'django_extensions'
+    'django_extensions',
+    'bootstrap4',
+    'logomachy',
 ]
 
 # --- Security ---

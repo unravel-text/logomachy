@@ -1,6 +1,37 @@
 {% extends 'logomachy/layout/page.html' %}
 {% block page_content %}
     <div class="container">
-    {{ object }}
+
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:documents:index' %}">Documents</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Document</li>
+            </ol>
+        </nav>
+
+        <h1>Document {{ document }}</h1>
+
+        <ul>
+            {% for revision in document.revisions.all %}
+                <li><a href="{% url 'logomachy:revisions:detail' name=revision.name %}">{{ revision }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <h2>Tags</h2>
+
+        <ul>
+            {% for tag in document.tags.all %}
+                <li><a href="{% url 'logomachy:tags:detail' name=tag.name %}">{{ tag }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <h2>Actions</h2>
+
+        <ul>
+            <li><a href="{% url 'logomachy:documents:revision_create' name=document.name %}">new revision</a></li>
+            <li><a href="{% url 'logomachy:documents:update' name=document.name %}">update details</a></li>
+        </ul>
+
     </div>
-{% endblock page_content%}
+{% endblock page_content %}

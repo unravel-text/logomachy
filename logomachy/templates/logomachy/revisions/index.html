@@ -1,7 +1,21 @@
 {% extends 'logomachy/layout/page.html' %}
 {% block page_content %}
     <div class="container">
+
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:home' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Revisions</li>
+            </ol>
+        </nav>
+
         <h1>Revisions</h1>
-        {{ object_list }}
+
+        <ul>
+            {% for revision in revisions %}
+                <li><a href="{% url 'logomachy:revisions:detail' name=revision.name %}">{{ revision.name }}</a></li>
+            {% endfor %}
+        </ul>
+
     </div>
 {% endblock page_content %}

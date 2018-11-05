@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 
 import logomachy.models as app_models
 
@@ -25,4 +26,7 @@ class Tag(app_models.Common):
         verbose_name_plural = 'Tags'
 
     def __str__(self):
-        return f'{self.name} "{self.title}"'
+        return '{} "{}"'.format(self.name, self.title)
+
+    def get_absolute_url(self):
+        return reverse_lazy('logomachy:tags:detail', kwargs={'name': self.name})

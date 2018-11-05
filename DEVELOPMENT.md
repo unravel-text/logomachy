@@ -12,9 +12,9 @@ Set up process:
     django-admin startproject logomachy_project
     mv ./logomachy_project/* ./
     python manage.py startapp logomachy
+    python -m pip --upgrade pip
     
-    pip setuptools mypy
-    django docutils psycopg2
-    celery django-celery-results django-celery-beat
-    django-debug-toolbar django-extensions
     
+Application setup:
+    
+    python manage.py createsuperuser --username admin --email test@example.com

@@ -14,7 +14,7 @@
             {% endif %}
         {% endif %}
 
-        <form method="post" action="{% url 'accounts_login' %}">
+        <form method="post" action="{% url 'logomachy:accounts:login' %}">
             {% csrf_token %}
             <table>
                 <tr>
@@ -32,6 +32,6 @@
         </form>
 
         {# Assumes you setup the password_reset view in your URLconf #}
-        <p><a href="{% url 'accounts_password_reset' %}">Lost password?</a></p>
+        <p><a href="{% url 'logomachy:accounts:password_reset' %}">Lost password?</a></p>
     </div>
 {% endblock page_content %}

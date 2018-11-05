@@ -27,7 +27,7 @@ urlpatterns = [
          name='django.contrib.sitemaps.views.sitemap'),
     path('admin/', admin.site.urls),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
-    path('', include('logomachy.urls'))
+    path('', include('logomachy.urls.app', namespace='logomachy'))
 ]
 
 handler404 = 'logomachy.views.error_views.page_not_found_404'

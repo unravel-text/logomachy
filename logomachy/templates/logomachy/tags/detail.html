@@ -1,6 +1,23 @@
 {% extends 'logomachy/layout/page.html' %}
 {% block page_content %}
     <div class="container">
-    {{ object }}
+
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:tags:index' %}">Tags</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tags</li>
+            </ol>
+        </nav>
+
+        <h1>Tag "{{ tag }}"</h1>
+
+        <h2>Documents</h2>
+        <ul>
+            {% for document in tag.documents.all %}
+                <li><a href="{% url 'logomachy:documents:detail' name=document.name %}">{{ document }}</a></li>
+            {% endfor %}
+        </ul>
+
     </div>
-{% endblock page_content%}
+{% endblock page_content %}

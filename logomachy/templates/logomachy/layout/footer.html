@@ -9,18 +9,14 @@
         <div class="col-6 col-md">
             <h5>Content</h5>
             <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="{% url 'home' %}">Home {% sr_only 'home' %}</a></li>
+                <li><a class="text-muted" href="{% url 'logomachy:home' %}">Home {% sr_only 'logomachy:home' %}</a></li>
                 <li>
                     <a class="text-muted"
-                       href="{% url 'documents_index' %}">Documents{% sr_only 'documents_index' %}</a>
-                    <span class="text-muted">(<a class="text-muted" href="{% url 'documents_create' %}">new</a>)</span>
+                       href="{% url 'logomachy:documents:index' %}">Documents{% sr_only 'logomachy:documents:index' %}</a>
+                    <span class="text-muted">(<a class="text-muted" href="{% url 'logomachy:documents:create' %}">new</a>)</span>
                 </li>
                 <li>
-                    <a class="text-muted"
-                       href="{% url 'revisions_index' %}">Revisions{% sr_only 'revisions_index' %}</a>
-                </li>
-                <li>
-                    <a class="text-muted" href="{% url 'tags_index' %}">Tags{% sr_only 'tags_index' %}</a>
+                    <a class="text-muted" href="{% url 'logomachy:tags:index' %}">Tags{% sr_only 'logomachy:tags:index' %}</a>
                 </li>
             </ul>
         </div>
@@ -40,9 +36,9 @@
                 <li><i class="fab fa-github"></i> <a class="text-muted"
                                                      href="{% app_settings 'LOGOMACHY_SOURCE_CODE_URL' %}">Source
                     code</a></li>
-                <li><a class="text-muted" href="{% url 'about_privacy' %}">Privacy</a></li>
-                <li><a class="text-muted" href="{% url 'about_terms' %}">Terms</a></li>
-                <li><a class="text-muted" href="{% url 'about_credits' %}">Credits</a></li>
+                <li><a class="text-muted" href="{% url 'logomachy:about:privacy' %}">Privacy</a></li>
+                <li><a class="text-muted" href="{% url 'logomachy:about:terms' %}">Terms</a></li>
+                <li><a class="text-muted" href="{% url 'logomachy:about:credits' %}">Credits</a></li>
             </ul>
         </div>
     </div>

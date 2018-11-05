@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.urls import reverse_lazy
 
 import logomachy.models as app_models
 from logomachy import utils as app_utils
@@ -67,4 +68,7 @@ class Revision(app_models.Common, app_utils.ModeratorMixin):
         verbose_name_plural = 'Revisions'
 
     def __str__(self):
-        return f'{self.document.name} [{self.name}] ({self.created_date})'
+        return '{} [{}] ({})'.format(self.document.name, self.name, self.created_date)
+
+    def get_absolute_url(self):
+        return reverse_lazy('logomachy:revisions:detail', kwargs={'name': self.name})

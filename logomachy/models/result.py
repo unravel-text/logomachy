@@ -52,4 +52,4 @@ class Result(app_models.Common):
         verbose_name_plural = 'Results'
 
     def __str__(self):
-        return f'{self.processor_name} ({self.processor_version})'
+        return '{} ({})'.format(self.processor_name, self.processor_version)

@@ -1,7 +1,7 @@
 {% load static app_tags %}
 <nav class="navbar navbar-expand-lg navbar-dark navbar-logomachy">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">
+        <a class="navbar-brand" href="{% url 'logomachy:home' %}">
             <img src="{% static 'images/favicon-32x32.png' %}" width="32" height="32"
                  class="d-inline-block align-middle" alt="Legal document icon">
             Logomachy
@@ -13,22 +13,16 @@
 
         <div class="collapse navbar-collapse" id="navbar-logomachy">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item {% nav_item_active 'home' %}">
-                    <a class="nav-link" href="{% url 'home' %}">Home {% sr_only 'home' %}</a>
+                <li class="nav-item {% nav_item_active 'logomachy:documents:index' %} {% nav_item_active 'logomachy:revisions:index' %}">
+                    <a class="nav-link" href="{% url 'logomachy:documents:index' %}">Documents {% sr_only 'logomachy:documents:index' %}</a>
                 </li>
-                <li class="nav-item {% nav_item_active 'documents_index' %}">
-                    <a class="nav-link" href="{% url 'documents_index' %}">Documents {% sr_only 'documents_index' %}</a>
-                </li>
-                <li class="nav-item {% nav_item_active 'revisions_index' %}">
-                    <a class="nav-link" href="{% url 'revisions_index' %}">Revisions {% sr_only 'revisions_index' %}</a>
-                </li>
-                <li class="nav-item {% nav_item_active 'tags_index' %}">
-                    <a class="nav-link" href="{% url 'tags_index' %}">Tags {% sr_only 'tags_index' %}</a>
+                <li class="nav-item {% nav_item_active 'logomachy:tags:index' %}">
+                    <a class="nav-link" href="{% url 'logomachy:tags:index' %}">Tags {% sr_only 'logomachy:tags:index' %}</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item  {% nav_item_active 'accounts_login' %}">
-                    <a class="nav-link" href="{% url 'accounts_login' %}">Login {% sr_only 'accounts_login' %}</a>
+                <li class="nav-item  {% nav_item_active 'logomachy:accounts:login' %}">
+                    <a class="nav-link" href="{% url 'logomachy:accounts:login' %}">Login {% sr_only 'logomachy:accounts:login' %}</a>
                 </li>
             </ul>
         </div>

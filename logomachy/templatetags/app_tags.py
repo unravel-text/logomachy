@@ -1,5 +1,6 @@
 from django import template
 from django.conf import settings
+from django.urls import reverse
 from django.utils.html import format_html
 
 register = template.Library()
@@ -16,8 +17,10 @@ def is_active(context, value):
         return False
     request = context.get('request')
     if request:
-        url_name = request.resolver_match.url_name
-        return url_name == value
+        value_url = reverse(value)
+        return request.path.startswith(value_url)
+    else:
+        raise ValueError("No request provided to is_active method.")
 
 
 @register.simple_tag(takes_context=True)

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils.text import slugify
 
 import logomachy.models as app_models
@@ -45,7 +46,7 @@ class Document(app_models.Common, app_utils.ModeratorMixin):
         verbose_name_plural = 'Documents'
 
     def __str__(self):
-        return f'{self.name} "{self.title}"'
+        return '{} "{}"'.format(self.name, self.title)
 
     def save(self, *args, **kwargs):
         """
@@ -56,3 +57,6 @@ class Document(app_models.Common, app_utils.ModeratorMixin):
             self.name = slugify(self.title)
 
         super(Document, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse_lazy('logomachy:documents:detail', kwargs={'name': self.name})

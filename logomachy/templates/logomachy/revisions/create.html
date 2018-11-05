@@ -1,9 +1,29 @@
 {% extends 'logomachy/layout/page.html' %}
+{% load bootstrap4 %}
 {% block page_content %}
     <div class="container">
-    <form method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
-    </form>
+
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:documents:index' %}">Documents</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:documents:detail' name=document_name %}">Document</a></li>
+                <li class="breadcrumb-item active" aria-current="page">New</li>
+            </ol>
+        </nav>
+
+        <h1>Create a new revision of "{{ document_name }}"</h1>
+
+        {% bootstrap_messages %}
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Create
+                </button>
+            {% endbuttons %}
+        </form>
+
     </div>
 {% endblock page_content %}

@@ -1,7 +1,21 @@
 {% extends 'logomachy/layout/page.html' %}
 {% block page_content %}
     <div class="container">
+
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:home' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tags</li>
+            </ol>
+        </nav>
+
         <h1>Tags</h1>
-        {{ object_list }}
+
+        <ul>
+            {% for tag in tags %}
+                <li><a href="{% url 'logomachy:tags:detail' name=tag.name %}">{{ tag }}</a></li>
+            {% endfor %}
+        </ul>
+
     </div>
-{% endblock page_content%}
+{% endblock page_content %}

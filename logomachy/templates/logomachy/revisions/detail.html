@@ -1,6 +1,17 @@
 {% extends 'logomachy/layout/page.html' %}
 {% block page_content %}
     <div class="container">
-    {{ object }}
+
+        <nav aria-label="breadcrumb" class="page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:documents:index' %}">Documents</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'logomachy:documents:detail' name=revision.document.name %}">Document</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Revision</li>
+            </ol>
+        </nav>
+
+        <h1>Revision {{ revision }}</h1>
+
     </div>
 {% endblock page_content %}

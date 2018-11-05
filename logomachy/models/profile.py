@@ -36,7 +36,7 @@ class Profile(app_models.Common):
         verbose_name_plural = 'Profiles'
 
     def __str__(self):
-        return f'{self.user} profile'
+        return '{} profile'.format(self.user)
 
     def save(self, *args, **kwargs):
         """

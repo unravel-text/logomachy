@@ -19,7 +19,7 @@ class ProfileView(view.TemplateView):
             try:
                 user = get_user_model().objects.get(username=username)
             except ObjectDoesNotExist:
-                raise Http404(f'User with name "{username}" does not exist.')
+                raise Http404('User with name "{}" does not exist.'.format(username))
         else:
             user = self.request.user
 
